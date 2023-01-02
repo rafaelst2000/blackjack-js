@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #333b9b;
+  font-family: 'Inter', 'sans-serif';
+}
+
+button {
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  position: relative;
+}
+
+.game-container h1 {
+  text-align: center;
+  margin-top: 2rem;
+  color: #ff85d5;
+}
+
+.player-1-side {
+  position: relative;
+}
+
+.separator {
+  content: '';
+  display: block;
+  height: 300px;
+  width: 3px;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  background: #33389b;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.buy-card {
+  background: #fff;
+  color: #000;
+}
+
+.stop {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 500px;
+}
+
+.absolute-card {
+  position: absolute;
+}
