@@ -4,75 +4,123 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
+
+main {
+  position: relative;
+}
+
+.main-container {
+  display: flex;
+  gap: 3rem;
+}
+
 body {
-  background: #333b9b;
+  background: rgb(0, 0, 0);
   font-family: 'Inter', 'sans-serif';
-}
-
-button {
-  padding: 1rem 1.5rem;
-  margin-top: 1rem;
-  border-radius: 8px;
-  border: 0;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.game-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100vh;
-  position: relative;
-}
-
-.game-container h1 {
-  text-align: center;
-  margin-top: 2rem;
-  color: #ff85d5;
-}
-
-.player-1-side {
-  position: relative;
-}
-
-.separator {
-  content: '';
-  display: block;
-  height: 300px;
-  width: 3px;
-  position: absolute;
-  left: 50%;
-  top: 35%;
-  background: #33389b;
-}
-
-.buttons {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  align-items: center;
+  height: 100vh;
 }
-
-.buy-card {
-  background: #fff;
-  color: #000;
+.game-table {
+  background: rgb(35, 128, 58);
+  background: linear-gradient(126deg, rgba(35, 128, 58, 1) 0%, rgba(35, 133, 59, 1) 100%);
+  width: 400px;
+  height: 600px;
+  border-radius: 20px;
+  box-shadow: 0 0 0 20px #141717;
+  padding: 2rem;
 }
-
-.stop {
-  background: transparent;
-  border: 2px solid #fff;
+h1 {
   color: #fff;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  color: #0c2e14;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+h3 {
+  color: #fff;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.deck {
+  display: flex;
+  justify-content: center;
+}
+
+.deck img {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: 150px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222222);
+  filter: drop-shadow(5px 5px 5px #222222);
+  cursor: pointer;
+  margin-top: 2rem;
 }
 
 .cards {
+  margin-top: 1rem;
   display: flex;
-  align-items: center;
   justify-content: center;
-  position: relative;
-  height: 500px;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .absolute-card {
-  position: absolute;
+  width: 70px;
+}
+
+.players-score {
+  color: white;
+  margin-top: 3rem;
+}
+
+.players-score p + p {
+  margin-top: 0.875rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.stop-button,
+.new-game-button {
+  border: 0;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  background: rgb(35, 128, 58);
+  font-size: 1rem;
+  margin-top: 2rem;
+  transition: 0.2s;
+}
+
+.stop-button:hover {
+  background: #cc0e0e;
+}
+
+.new-game-button {
+  background: #0890a8;
+}
+
+.new-game-button:hover {
+  background: rgb(35, 128, 58);
+}
+
+.hidden {
+  display: none;
 }

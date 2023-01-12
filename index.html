@@ -8,34 +8,32 @@
   <title>Blackjack JS</title>
 </head>
 <body>
-  <main class="game-container">
-    <div class="player-1-side">
-      <h1>Jogador 1</h1>
-
-      <div class="player-1-cards cards">
+  <main>
+    <div class="main-container">
+      <div>
+        <h1 class="total-score">Total: 0</h1>
+        <div class="game-table">
+          <h2>BLACK JACK JS</h2>
+          <h3>Vez de: </h3>
+          <div class="deck">
+            <img class="deck-img" src="deck.png" title="Clique para virar uma carta">
+          </div>
+    
+          <div class="cards">
+          </div>
+        </div>
+        <div class="button-container">
+          <button class="stop-button">Parar</button>
+          <button class="new-game-button hidden">Novo jogo</button>
+        </div>
       </div>
-
-      <div class="buttons">
-        <button class="buy-card">Virar +1</button>
-        <button class="stop">Parar</button>
+  
+      <div class="players-score">
+        <p class="player-1-score">Rafael: 0</p>
+        <p class="player-2-score">Rafael: 0</p>
+        <p class="player-3-score">Rafael: 0</p>
       </div>
     </div>
-
-
-    <div class="player-2-side">
-      <h1>Jogador 2</h1>
-
-      <div class="player-2-cards">
-      </div>
-
-      <div class="buttons">
-        <button class="buy-card">Virar +1</button>
-        <button class="stop">Parar</button>
-      </div>
-    </div>
-
-
-    <div class="separator"></div>
   </main>
 </body>
 <script src="./script.js"></script>
