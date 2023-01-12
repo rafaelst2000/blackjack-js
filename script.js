@@ -8,13 +8,14 @@ const name1 = prompt('Digite o nome do Jogador 1')
 const name2 = prompt('Digite o nome do Jogador 2')
 const name3 = prompt('Digite o nome do Jogador 3')
 
+const deckImgBtn = document.querySelector('.deck-img')
+const stopBtn = document.querySelector('.stop-button')
+const newGameBtn = document.querySelector('.new-game-button')
+
 let deck = []
 let playerTurn = 1
 let isGameFinished = false
 
-const deckImgBtn = document.querySelector('.deck-img')
-const stopBtn = document.querySelector('.stop-button')
-const newGameBtn = document.querySelector('.new-game-button')
 let player1 = new Player(name1, 0, [])
 let player2 = new Player(name2, 0, [])
 let player3 = new Player(name3, 0, [])
