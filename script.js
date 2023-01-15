@@ -25,7 +25,6 @@ const continueBtn = document.querySelector('.continue-button')
 const newGameBtn = document.querySelector('.new-game-button')
 const explodeTxt = document.querySelector('.explode')
 
-
 let playerTurn = 1
 let isGameFinished = false
 let isExploded = false

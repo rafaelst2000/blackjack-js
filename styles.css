@@ -28,7 +28,6 @@ body {
   background: rgb(35, 128, 58);
   background: linear-gradient(126deg, rgba(35, 128, 58, 1) 0%, rgba(35, 133, 59, 1) 100%);
   width: 400px;
-  height: 600px;
   border-radius: 20px;
   box-shadow: 0 0 0 20px #141717;
   padding: 2rem;
