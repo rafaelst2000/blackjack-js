@@ -1,20 +1,38 @@
+let deck = []
+fetch('https://deckofcardsapi.com/api/deck/new/shuffle/')
+.then(response => response.json())
+.then(result => {
+  const { deck_id } = result
+  fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=52`)
+  .then(response => response.json())
+  .then(result => {
+    deck = result.cards
+  })
+})
+
 function Player(name, count, cards) {
   this.name = name;
   this.count = count;
   this.cards = cards;
 }
-
-const name1 = prompt('Digite o nome do Jogador 1')
+/* const name1 = prompt('Digite o nome do Jogador 1')
 const name2 = prompt('Digite o nome do Jogador 2')
 const name3 = prompt('Digite o nome do Jogador 3')
+ */
+const name1 = 'aa'
+const name2 = 'bb'
+const name3 = 'cc'
 
 const deckImgBtn = document.querySelector('.deck-img')
 const stopBtn = document.querySelector('.stop-button')
+const continueBtn = document.querySelector('.continue-button')
 const newGameBtn = document.querySelector('.new-game-button')
+const explodeTxt = document.querySelector('.explode')
 
-let deck = []
+
 let playerTurn = 1
 let isGameFinished = false
+let isExploded = false
 
 let player1 = new Player(name1, 0, [])
 let player2 = new Player(name2, 0, [])
@@ -23,24 +41,19 @@ let player3 = new Player(name3, 0, [])
 drawPlayerName(player1.name)
 drawPlayersScore()
 
-fetch('https://deckofcardsapi.com/api/deck/new/shuffle/')
-  .then(response => response.json())
-  .then(result => {
-    const { deck_id } = result
-    fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=52`)
-      .then(response => response.json())
-      .then(result => {
-        deck = result.cards
-      })
-  })
-
 function drawPlayerName(name) {
   const container = document.querySelector('h3')
-  container.textContent = `Vez de: ${name}`
+  if(isExploded) container.textContent = ``
+  else container.textContent = `Vez de: ${name}`
+}
+
+function clearPlayerName() {
+  const container = document.querySelector('h3')
+  container.textContent = ''
 }
 
 function makePlay(player) {
-  if(player.count > 21 || isGameFinished) return
+  if(player.count > 21 || isGameFinished || isExploded) return
   const newCard = deck[0]
 
   player.cards.push(newCard);
@@ -48,16 +61,10 @@ function makePlay(player) {
 
   drawCards(player, newCard)
   player.count += getCardValue(newCard)
-  showPlayerScoreAtScreen(player.count)
+  showPlayerScoreAtScreen(player)
 
-  if(player.count == 21) {
-    winGame(player)
-  }
-
-  if(player.count > 21) { 
-    handleClickStopOrExplode()
-    alert('Estourou!')
-  }
+  if(player.count == 21) verifyScore()
+  if(player.count > 21) handleClickStopOrExplode()
 }
 
 function drawCards(player, newCard) {
@@ -84,15 +91,27 @@ function getCardValue(card) {
   return Number(value)
 }
 
-function showPlayerScoreAtScreen(score) {
+function showPlayerScoreAtScreen(player) {
   const container = document.querySelector('.total-score')
-  container.textContent = `Total: ${score}`
+  container.textContent = `Total: ${player.count}`
+
+  if(player.count > 21) {
+    isExploded = true
+    explodeTxt.innerHTML = `${player.name} ESTOUROU`
+    stopBtn.classList.add('hidden')
+    continueBtn.classList.remove('hidden')
+    clearPlayerName()
+  }
+}
+
+function handleClickStop() {
+  clearScreen()
+  handleClickStopOrExplode()
 }
 
 function handleClickStopOrExplode() {
   playerTurn++
   drawPlayersScore()
-  clearScreen()
   if(playerTurn < 4) {
     const players = { 1: player1.name, 2: player2.name, 3: player3.name }
     drawPlayerName(players[playerTurn])
@@ -102,6 +121,7 @@ function handleClickStopOrExplode() {
 }
 
 function clearScreen() {
+  explodeTxt.innerHTML = ''
   const score = document.querySelector('.total-score')
   score.textContent = `Total: 0`
 
@@ -126,47 +146,56 @@ function verifyScore() {
   const players = [player1, player2, player3]
   const orderedValidScorePlayers = players.filter(player => player.count < 22).sort((a,b) => b.count - a.count)
 
+  isGameFinished = true
+
+  continueBtn.classList.add('hidden')
+  stopBtn.classList.add('hidden')
+  newGameBtn.classList.remove('hidden')
   if(!orderedValidScorePlayers.length) container.textContent = 'Nenhum jogador venceu :('
   else {
     if(orderedValidScorePlayers.length === 3 && orderedValidScorePlayers[0].count === orderedValidScorePlayers[1].count && orderedValidScorePlayers[0].count === orderedValidScorePlayers[2].count) container.textContent = 'Empate dos 3!'
     else if(orderedValidScorePlayers.length === 2 && (orderedValidScorePlayers[0].count === orderedValidScorePlayers[1].count)) container.textContent = `Empate de ${orderedValidScorePlayers[0].name} e ${orderedValidScorePlayers[1].name}!`
     else container.textContent = `Vitória de ${orderedValidScorePlayers[0].name}!!!`
   }
-
-  isGameFinished = true
-
-  const stopBtn = document.querySelector('.stop-button')
-  stopBtn.classList.toggle('hidden')
-
-  const newGame = document.querySelector('.new-game-button')
-  newGame.classList.toggle('hidden')
-}
-
-function winGame(player) {
-  isGameFinished = true
-  const container = document.querySelector('h3')
-  container.textContent = `Vitória de ${player.name}!!!`
-  stopBtn.classList.toggle('hidden')
-  newGameBtn.classList.toggle('hidden')
 }
 
 function newGame() {
   isGameFinished = false
+  isExploded = false
   player1 = new Player(name1, 0, [])
   player2 = new Player(name2, 0, [])
   player3 = new Player(name3, 0, [])
   playerTurn = 0
 
+  clearScreen()
   handleClickStopOrExplode()
-  stopBtn.classList.toggle('hidden')
-  newGameBtn.classList.toggle('hidden')
+  stopBtn.classList.remove('hidden')
+  newGameBtn.classList.add('hidden')
+}
+
+function changeNextPlayer() {
+  clearScreen()
+  if(playerTurn <= 3) {
+    isExploded = false
+    playerTurn--
+    explodeTxt.innerHTML = ``
+    continueBtn.classList.add('hidden')
+    stopBtn.classList.remove('hidden')
+    handleClickStopOrExplode()
+  }
+  else {
+    isExploded = false
+    explodeTxt.innerHTML = ''
+    verifyScore()
+  }
 }
 
 deckImgBtn.addEventListener('click', () => {
   if(playerTurn === 1) makePlay(player1)
-  if(playerTurn === 2) makePlay(player2)
-  if(playerTurn === 3) makePlay(player3)
+  else if(playerTurn === 2) makePlay(player2)
+  else if(playerTurn === 3) makePlay(player3)
 })
 
-stopBtn.addEventListener('click', handleClickStopOrExplode)
+stopBtn.addEventListener('click', handleClickStop)
 newGameBtn.addEventListener('click', newGame)
+continueBtn.addEventListener('click', changeNextPlayer)

@@ -96,7 +96,8 @@ h3 {
 }
 
 .stop-button,
-.new-game-button {
+.new-game-button,
+.continue-button {
   border: 0;
   padding: 1rem 2rem;
   border-radius: 8px;
@@ -123,4 +124,19 @@ h3 {
 
 .hidden {
   display: none;
+}
+
+.explode {
+  color: #cc0e0e;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.continue-button {
+  background: #0890a8;
+}
+
+.continue-button:hover {
+  background: #075866;
 }
