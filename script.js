@@ -15,13 +15,9 @@ function Player(name, count, cards) {
   this.count = count;
   this.cards = cards;
 }
-/* const name1 = prompt('Digite o nome do Jogador 1')
+const name1 = prompt('Digite o nome do Jogador 1')
 const name2 = prompt('Digite o nome do Jogador 2')
 const name3 = prompt('Digite o nome do Jogador 3')
- */
-const name1 = 'aa'
-const name2 = 'bb'
-const name3 = 'cc'
 
 const deckImgBtn = document.querySelector('.deck-img')
 const stopBtn = document.querySelector('.stop-button')
