@@ -1,14 +1,17 @@
 let deck = []
+let deckId = ''
+
 fetch('https://deckofcardsapi.com/api/deck/new/shuffle/')
-.then(response => response.json())
-.then(result => {
-  const { deck_id } = result
-  fetch(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=52`)
   .then(response => response.json())
-  .then(result => {
-    deck = result.cards
-  })
-})
+    .then(result => {
+      const { deck_id } = result
+      deckId = deck_id
+      fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
+        .then(response => response.json())
+          .then(result => {
+            deck = result.cards
+          })
+    })
 
 function Player(name, count, cards) {
   this.name = name;
@@ -155,17 +158,26 @@ function verifyScore() {
 }
 
 function newGame() {
-  isGameFinished = false
-  isExploded = false
-  player1 = new Player(name1, 0, [])
-  player2 = new Player(name2, 0, [])
-  player3 = new Player(name3, 0, [])
-  playerTurn = 0
-
-  clearScreen()
-  handleClickStopOrExplode()
-  stopBtn.classList.remove('hidden')
-  newGameBtn.classList.add('hidden')
+  fetch(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+    .then(response => response.json())
+      .then(result => {
+        fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=52`)
+          .then(response => response.json())
+            .then(result => {
+              deck = result.cards
+              isGameFinished = false
+              isExploded = false
+              player1 = new Player(name1, 0, [])
+              player2 = new Player(name2, 0, [])
+              player3 = new Player(name3, 0, [])
+              playerTurn = 0
+            
+              clearScreen()
+              handleClickStopOrExplode()
+              stopBtn.classList.remove('hidden')
+              newGameBtn.classList.add('hidden')
+            })
+      })
 }
 
 function changeNextPlayer() {
